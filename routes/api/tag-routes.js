@@ -5,7 +5,6 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 // DONE: GET ALL TAGS
 router.get('/', (req, res) => {
-  // .findAll
   // be sure to include its associated Product data
   Tag.findAll({
     include: {
@@ -21,31 +20,93 @@ router.get('/', (req, res) => {
 
 
 
-// TODO: GET SINGLE TAG BY `ID`
+// DONE: GET SINGLE TAG BY `ID`
 router.get('/:id', (req, res) => {
-  // .findOne
   // be sure to include its associated Product data
+  Tag.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: {
+      model: Product
+    }
+  })
+    .then(dbTagData => {
+      if (!dbTagData) {
+        res.status(404).json({ message: 'Error: No tag found with this id' });
+        return;
+      }
+      res.json(dbTagData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 
 
-// TODO: CREATE NEW TAG
+// DONE: CREATE NEW TAG
 router.post('/', (req, res) => {
-  // .create
+  Tag.create({
+    tag_name: req.body.tag_name
+  })
+    .then(dbTagData => res.json(dbTagData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 
 
-// TODO: UPDATE A TAG BY `ID`
+// DONE: UPDATE A TAG BY `ID`
 router.put('/:id', (req, res) => {
-  // .update a tag's name by its `id` value
+  Tag.update(
+    {
+      tag_name: req.body.tag_name
+    },
+    {
+      where: {
+        id: req.params.id
+      }
+    }
+  )
+    .then(dbTagData => {
+      if (!dbTagData) {
+        res.status(404).json({ message: 'Error: No tag found with this id' });
+        return;
+      }
+      res.json(dbTagData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 
 
-// TODO: DELETE A TAG BY `ID`
+// DONE: DELETE A TAG BY `ID`
 router.delete('/:id', (req, res) => {
-  // .destroy
+  Tag.destroy({
+      where: {
+        id: req.params.id
+      }
+    }
+  )
+    .then(dbTagData => {
+      if (!dbTagData) {
+        res.status(404).json({ message: 'Error: No tag found with this id' });
+        return;
+      }
+      res.json(dbTagData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
+
 
 module.exports = router;
