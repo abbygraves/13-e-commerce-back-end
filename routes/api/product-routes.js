@@ -3,18 +3,55 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
-// TODO: GET ALL PRODUCTS
+// DONE: GET ALL PRODUCTS
 router.get('/', (req, res) => {
   // .findAll
   // be sure to include its associated Category and Tag data
+  Product.findAll({
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: Tag,
+        attributes: ['tag_name']
+      }
+    ]
+  })
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 
 
-// TODO: GET SINGLE PRODUCT BY `ID`
+// DONE: GET SINGLE PRODUCT BY `ID`
 router.get('/:id', (req, res) => {
   // .findOne
   // be sure to include its associated Category and Tag data
+  Product.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: Tag,
+        attributes: ['tag_name']
+      }
+    ]
+  })
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 
@@ -97,9 +134,25 @@ router.put('/:id', (req, res) => {
 
 
 
-// TODO: DELETE A PRODUCT BY `ID`
+// DONE: DELETE A PRODUCT BY `ID`
 router.delete('/:id', (req, res) => {
   // .destroy
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbPostData => {
+    if (!dbPostData) {
+      res.status(404).json({ message: 'No post found with this id' });
+      return;
+    }
+    res.json(dbPostData);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 
