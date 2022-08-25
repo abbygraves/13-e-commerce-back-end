@@ -7,7 +7,7 @@ The back end code for an e-commerce site that utilizes Sequelize to interact wit
 
 ### [Click to View Demo](https://youtu.be/iHKYKtxZd7g)
 
-<img src="./assets/e-commerce-back-end.gif"/>
+<img src="./assets/e-commerce-back-end.gif" width="900px"/>
 
 <br/>
 
