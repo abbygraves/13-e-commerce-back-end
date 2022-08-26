@@ -5,7 +5,7 @@
 ## **Description**
 The back end code for an e-commerce site that utilizes Sequelize to interact with a MySQL2 database. API routes, tested in Insomnia, allow users to view, add, update, and delete data in the database. 
 
-### [Click to View Demo](https://youtu.be/iHKYKtxZd7g)
+### [Click to View Demo](https://youtu.be/SMBab7rwTW4)
 
 <img src="./assets/e-commerce-back-end.gif" width="800px"/>
 
